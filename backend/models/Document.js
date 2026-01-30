@@ -8,7 +8,8 @@ const documentSchema = new mongoose.Schema(
       required: true,
     },
     title: {
-      type: [true, "Please provide a document title"],
+      type: String,
+      required: [true, "Please provide a document title"],
       trim: true,
     },
     fileName: {

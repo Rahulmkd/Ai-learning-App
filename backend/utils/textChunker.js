@@ -11,12 +11,12 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
     return [];
   }
 
-  //Clean text while preserving paragraphs structure
+  // Clean text while preserving paragraph structure
   const cleanedText = text
-    .replace(/\r\n/g, "\n")
-    .replace(/\S+/g, "")
-    .replace(/\n /g, "\n")
-    .replace(/ \n /g, "\n")
+    .replace(/\r\n/g, "\n") // normalize Windows newlines
+    .replace(/[ \t]+/g, " ") // collapse multiple spaces/tabs
+    .replace(/\n +/g, "\n") // remove spaces after newline
+    .replace(/ +\n/g, "\n") // remove spaces before newline
     .trim();
 
   // Try to split by paragraphs (single or double newlines)

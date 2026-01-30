@@ -31,7 +31,7 @@ export const uploadDocument = async (req, res, next) => {
     }
 
     // Construct the URL for the uploaded file
-    const baseUrl = `http://localhost:$(process.env.PORT || 8000)`;
+    const baseUrl = `http://localhost:${process.env.PORT || 8000}`;
     const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
 
     // Create document record
@@ -72,7 +72,7 @@ const processPDF = async (documentId, filePath) => {
     const chunks = chunkText(text, 500, 50);
 
     // Update document
-    await Document.findByidAndUpdate(documentId, {
+    await Document.findByIdAndUpdate(documentId, {
       extractedText: text,
       chunks: chunks,
       status: "ready",
@@ -92,6 +92,50 @@ const processPDF = async (documentId, filePath) => {
 //@access Private
 export const getDocuments = async (req, res, next) => {
   try {
+    const documents = await Document.aggregate([
+      {
+        $match: { userId: new mongoose.Types.ObjectId(req.user._id) },
+      },
+      {
+        $lookup: {
+          from: "flashcards",
+          localField: "_id",
+          foreignField: "documentId",
+          as: "flashcardSets",
+        },
+      },
+      {
+        $lookup: {
+          from: "quizzes",
+          localField: "_id",
+          foreignField: "documentId",
+          as: "quizzes",
+        },
+      },
+      {
+        $addFields: {
+          flashcardCount: { $size: "$flashcardSets" },
+          quizCount: { $size: "$quizzes" },
+        },
+      },
+      {
+        $project: {
+          extractedText: 0,
+          chunks: 0,
+          flashcardSets: 0,
+          quizzes: 0,
+        },
+      },
+      {
+        $sort: { uploadDate: -1 },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      count: documents.length,
+      data: documents,
+    });
   } catch (error) {
     next(error);
   }
