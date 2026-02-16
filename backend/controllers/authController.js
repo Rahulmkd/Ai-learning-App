@@ -100,7 +100,7 @@ export const login = async (req, res, next) => {
       success: true,
       user: {
         id: user._id,
-        username: user.email,
+        username: user.username,
         email: user.email,
         profileImage: user.profileImage,
       },
