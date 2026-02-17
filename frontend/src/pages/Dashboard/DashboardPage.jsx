@@ -11,16 +11,16 @@ import {
 } from "lucide-react";
 
 const DashboardPage = () => {
-  const [dashboardData, setDashoardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDahboardData = async () => {
+    const fetchDashboardData = async () => {
       try {
         const data = await progressService.getDashboardData();
         console.log("Data___getDashboardData", data);
 
-        setDashoardData(data.data);
+        setDashboardData(data.data);
       } catch (error) {
         toast.error("Failed to fetch dashboard data.");
         console.error(error);
@@ -29,7 +29,7 @@ const DashboardPage = () => {
       }
     };
 
-    fetchDahboardData();
+    fetchDashboardData();
   }, []);
 
   if (loading) {
@@ -68,8 +68,8 @@ const DashboardPage = () => {
       label: "Total Quizzes",
       value: dashboardData.overview.totalQuizzes,
       icon: BrainCircuit,
-      gradient: "from-emerald-400 to-teal-500",
-      shadowColor: "shadow-emerald-500/25",
+      gradient: "from-indigo-400 to-purple-500",
+      shadowColor: "shadow-indigo-500/25",
     },
   ];
 
@@ -112,7 +112,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Recent Activity Section */}
-        <div className="bg-white/80 backdrop-blur-xl border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 p-8">
+        <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 p-8">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center">
               <Clock className="w-5 h-5 text-slate-600" strokeWidth={2} />
@@ -125,7 +125,7 @@ const DashboardPage = () => {
           {dashboardData.recentActivity &&
           (dashboardData.recentActivity.documents.length > 0 ||
             dashboardData.recentActivity.quizzes.length > 0) ? (
-            <div className="">
+            <div className="space-y-3">
               {[
                 ...(dashboardData.recentActivity.documents || []).map(
                   (doc) => ({
@@ -156,13 +156,13 @@ const DashboardPage = () => {
                           className={`w-2 h-2 rounded-full ${
                             activity.type === "document"
                               ? "bg-linear-to-r from-blue-400 to-cyan-500"
-                              : "bg-linear-to-r from-emerald-400 to-teal-500"
+                              : "bg-linear-to-r from-indigo-400 to-purple-500"
                           }`}
                         />
                         <p className="text-sm font-medium text-slate-900 truncate">
                           {activity.type === "document"
                             ? "Accessed Document: "
-                            : "Attempted Quizz: "}
+                            : "Attempted Quiz: "}
                           <span className="text-slate-700">
                             {activity.description}
                           </span>
@@ -176,7 +176,7 @@ const DashboardPage = () => {
                     {activity.link && (
                       <a
                         href={activity.link}
-                        className="ml-4 px-4 py-2 text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200 whitespace-nowrap"
+                        className="ml-4 px-4 py-2 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-all duration-200 whitespace-nowrap"
                       >
                         View
                       </a>
