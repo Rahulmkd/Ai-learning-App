@@ -175,7 +175,6 @@ const ChatInterface = () => {
           </div>
         )}
       </div>
-
       {/* Input Area */}
       <div className="p-5 border-t border-slate-200/60 bg-white/80">
         <form onSubmit={handleSendMessage} className="flex items-center gap-3">

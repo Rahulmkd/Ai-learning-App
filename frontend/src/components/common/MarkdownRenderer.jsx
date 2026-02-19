@@ -51,7 +51,7 @@ const MarkdownRenderer = ({ content }) => {
               <SyntaxHighlighter
                 style={dracula}
                 language={match[1]}
-                PrevTag="div"
+                PreTag="div"
                 {...props}
               >
                 {String(children).replace(/\n$/, "")}
@@ -65,7 +65,7 @@ const MarkdownRenderer = ({ content }) => {
               </code>
             );
           },
-          prev: ({ node, ...props }) => (
+          pre: ({ node, ...props }) => (
             <pre
               className="bg-neutral-800 text-white p-3 rounded-md overflow-x-auto font-mono text-sm my-4"
               {...props}
