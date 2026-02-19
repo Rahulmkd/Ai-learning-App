@@ -83,7 +83,7 @@ const DocumentListPage = () => {
     setDeleting(true);
     try {
       await documentService.deleteDocument(selectedDoc._id);
-      toast.success(`'${selectedDoc.title}'deleted. `);
+      toast.success(`'${selectedDoc.title}' deleted.`);
       setIsDeleteModalOpen(false);
       setSelectedDoc(null);
       setDocuments(documents.filter((d) => d._id !== selectedDoc._id));
@@ -263,7 +263,7 @@ const DocumentListPage = () => {
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="flex-1 h-11 px-4 bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white text-xs font-semibold rounded-xl transition-all duration-200 shadow=lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+                  className="flex-1 h-11 px-4 bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white text-xs font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
                 >
                   {uploading ? (
                     <span className="flex items-center justify-center gap-2">
