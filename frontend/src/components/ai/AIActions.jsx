@@ -80,7 +80,7 @@ const AIActions = () => {
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-100 to-cyan-100 flex items-center justify-center ">
                     <BookOpen
-                      className="w-4 h-8 text-blue-600"
+                      className="w-4 h-4 text-blue-600"
                       strokeWidth={2}
                     />
                   </div>
@@ -109,7 +109,7 @@ const AIActions = () => {
             </div>
           </div>
           {/* Explain Concept */}
-          <div className="grup p-5 bg-linear-to-br from-slate-50/50 to-white rounded-xl border border-slate-200/60 hover:border-slate-300/60 hover:shadow-md transition-all duration-200">
+          <div className="group p-5 bg-linear-to-br from-slate-50/50 to-white rounded-xl border border-slate-200/60 hover:border-slate-300/60 hover:shadow-md transition-all duration-200">
             <form onSubmit={handleExplainConcept}>
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-8 rounded-lg bg-linear-to-br from-amber-100 to-orange-100 flex items-center justify-center">
@@ -136,7 +136,7 @@ const AIActions = () => {
 
                 <button
                   type="submit"
-                  disabled={loadingAction === "explaim" || !concept.trim()}
+                  disabled={loadingAction === "explain" || !concept.trim()}
                   className="shrink-0 h-11 px-5 bg-linear-to-br from-indigo-600 to-indigo-500 hover:from-indigo-600 hover:to-indigo-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 "
                 >
                   {loadingAction === "explain" ? (
