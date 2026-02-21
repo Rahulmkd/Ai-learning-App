@@ -57,7 +57,7 @@ export const reviewFlashcard = async (req, res, next) => {
     }
 
     const cardIndex = flashcardSet.cards.findIndex(
-      (card) => card._id.toString() === req.params.cardid,
+      (card) => card._id.toString() === req.params.cardId,
     );
 
     if (cardIndex === -1) {
@@ -88,7 +88,7 @@ export const reviewFlashcard = async (req, res, next) => {
 export const togglesStarFlashcard = async (req, res, next) => {
   try {
     const flashcardSet = await Flashcard.findOne({
-      "card._id": req.params.cardid,
+      "cards._id": req.params.cardId,
       userId: req.user._id,
     });
 
