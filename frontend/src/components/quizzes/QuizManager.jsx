@@ -61,7 +61,6 @@ const QuizManager = ({ documentId }) => {
   // Delete Request
   const handleDeleteRequest = (quiz) => {
     setSelectedQuiz(quiz);
-    console.log(quiz.documentId.title);
     setIsDeleteModalOpen(true);
   };
 
@@ -182,7 +181,7 @@ const QuizManager = ({ documentId }) => {
             <Button
               onClick={handleConfirmDelete}
               disabled={deleting}
-              className="bg-red-500 hover:bg-red-600 active:bg-red-700 focus:ring-red-500"
+              className=""
             >
               {deleting ? "Deleting..." : "Delete"}
             </Button>

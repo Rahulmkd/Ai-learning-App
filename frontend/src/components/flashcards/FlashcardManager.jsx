@@ -363,7 +363,7 @@ const FlashcardManager = ({ documentId }) => {
             <button
               onClick={handleConfirmDelete}
               disabled={deleting}
-              className="px-5 h-11 bg-linear-to-br from-rose-500 to-rose-500 hover:from-rose-600 hover:to-rose-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-rose-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 "
+              className="px-5 h-11 bg-linear-to-br from-rose-500 to-rose-500 hover:from-rose-600 hover:to-rose-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-rose-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
             >
               {deleting ? (
                 <span className="flex items-center gap-2">

@@ -15,8 +15,8 @@ router.use(protect);
 
 router.get("/:documentId", getQuizzes);
 router.get("/quiz/:id", getQuizById);
-router.post("/:id/submit", submitQuiz);
-router.get("/:id/results", getQuizResults);
+router.post("/quiz/:id/submit", submitQuiz);
+router.get("/quiz/:id/results", getQuizResults);
 router.delete("/:id", deleteQuiz);
 
 export default router;
