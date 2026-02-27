@@ -115,6 +115,7 @@ const FlashcardManager = ({ documentId }) => {
       toast.success("Flashcard starred status updated!");
     } catch (error) {
       toast.error("Failed to updated Start Status.");
+      console.error(error);
     }
   };
 

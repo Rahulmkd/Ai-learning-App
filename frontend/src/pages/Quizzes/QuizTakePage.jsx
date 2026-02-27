@@ -94,7 +94,7 @@ const QuizTakePage = () => {
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
   const isAnswered = selectedAnswers.hasOwnProperty(currentQuestion._id);
-  const answerdCount = Object.keys(selectedAnswers).length;
+  const answeredCount = Object.keys(selectedAnswers).length;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -107,7 +107,7 @@ const QuizTakePage = () => {
             Question {currentQuestionIndex + 1} of {quiz.questions.length}
           </span>
           <span className="text-sm font-medium text-slate-500">
-            {answerdCount} answered
+            {answeredCount} answered
           </span>
         </div>
 
