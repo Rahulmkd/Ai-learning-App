@@ -81,6 +81,7 @@ const FlashcardPage = () => {
       toast.success("Flashcard reviewed!");
     } catch (error) {
       toast.error("Failed to review flashcard.");
+      console.error(error);
     }
   };
 
@@ -96,6 +97,7 @@ const FlashcardPage = () => {
       toast.success("Flashcard stared status updated!");
     } catch (error) {
       toast.error("Failed to update star status. ");
+      console.error(error);
     }
   };
 
@@ -162,7 +164,10 @@ const FlashcardPage = () => {
   return (
     <div>
       <div className="mb-4">
-        <Link to={`/documents/${documentId}`} className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors ">
+        <Link
+          to={`/documents/${documentId}`}
+          className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors "
+        >
           <ArrowLeft size={16} />
           Back to Document
         </Link>
