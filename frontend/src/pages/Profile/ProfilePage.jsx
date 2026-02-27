@@ -3,7 +3,6 @@ import PageHeader from "../../components/common/PageHeader";
 import Button from "../../components/common/Button";
 import Spinner from "../../components/common/Spinner";
 import authService from "../../services/authService";
-import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import { User, Mail, Lock } from "lucide-react";
 
@@ -15,7 +14,7 @@ const ProfilePage = () => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewpassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -36,7 +35,7 @@ const ProfilePage = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      toast.error("New Password do not match.");
+      toast.error("New Passwords do not match.");
       return;
     }
 
@@ -44,13 +43,13 @@ const ProfilePage = () => {
       toast.error("New Password must be at least 6 characters long.");
       return;
     }
-    setNewPassword(true);
+    setPasswordLoading(true);
     try {
       await authService.changePassword({ currentPassword, newPassword });
       toast.success("Password changed successfully!");
       setCurrentPassword("");
       setNewPassword("");
-      setConfirmNewpassword("");
+      setConfirmNewPassword("");
     } catch (error) {
       toast.error(error.message || "Failed to change password.");
     } finally {
@@ -81,7 +80,7 @@ const ProfilePage = () => {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="w-4 h-4 text-neutral-400" />
                 </div>
-                <p className="w-full h-9 pl-9 pt-2 border border-neutral-200 rounded-lg bg-neutral-50 text-sm text-neutral-900">
+                <p className="w-full h-9 pl-9 pr-3 pt-2 border border-neutral-200 rounded-lg bg-neutral-50 text-sm text-neutral-900">
                   {username}
                 </p>
               </div>
@@ -157,7 +156,7 @@ const ProfilePage = () => {
                 <input
                   type="password"
                   value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewpassword(e.target.value)}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
                   required
                   className="w-full h-9 pl-9 pr-3 border border-neutral-200 rounded-lg bg-white text-sm text-neutral-900 placeholder-neutral-400 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
@@ -165,7 +164,7 @@ const ProfilePage = () => {
             </div>
 
             <div className="flex justify-end">
-              <Button type="submi" disabled={passwordLoading}>
+              <Button type="submit" disabled={passwordLoading}>
                 {passwordLoading ? "Changing..." : "Change Password"}
               </Button>
             </div>
