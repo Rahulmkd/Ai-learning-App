@@ -12,6 +12,7 @@ import {
   BookOpen,
   X,
 } from "lucide-react";
+import logo from "../../components/layout/logo/logo.png";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { logout } = useAuth();
@@ -58,15 +59,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         {/* Logo and Close button for mobile */}
         <div className="flex items-center justify-between h-16 border-b border-slate-200/60">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-linear-to-br from-indigo-400 to-purple-500 shadow-md shadow-indigo-500/20">
-              <BrainCircuit
-                className="text-white"
-                size={20}
-                strokeWidth={2.5}
-              />
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl shadow-md shadow-indigo-500/20">
+              <img src={logo} alt="Logo" />
             </div>
             <h1 className="text-sm md:text-base font-bold text-slate-900 tracking-tight">
-              AI Learning Assistant
+              AI Learning Platform
             </h1>
           </div>
           <button

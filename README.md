@@ -8,8 +8,7 @@ Built with React, Node.js, MongoDB, and Google Gemini API, this platform reduces
 
 ## 🚀 Live Demo
 
-🌐 Frontend: -----  
-🔗 Backend API: -----
+🌐 link------
 
 ---
 
@@ -36,11 +35,11 @@ Built with React, Node.js, MongoDB, and Google Gemini API, this platform reduces
 
 The AI Learning Platform enables users to:
 
-- 📄 Upload PDF documents  
-- 🧠 Generate AI-powered summaries  
-- ❓ Create quizzes automatically  
-- 🗂 Generate flashcards  
-- 📊 Track quiz performance  
+- 📄 Upload PDF documents
+- 🧠 Generate AI-powered summaries
+- ❓ Create quizzes automatically
+- 🗂 Generate flashcards
+- 📊 Track quiz performance
 
 The platform integrates Google Gemini API for structured AI content generation and uses MongoDB for persistent storage.
 
@@ -49,27 +48,32 @@ The platform integrates Google Gemini API for structured AI content generation a
 ## ✨ Features
 
 ### 🔐 Authentication
+
 - JWT-based authentication
 - Password hashing using bcrypt
 - Protected routes middleware
 
 ### 📄 Document Processing
+
 - PDF upload with file validation
 - Text extraction using pdf-parse
 - Structured AI prompt generation
 
 ### 🤖 AI Capabilities
+
 - Summarization
 - Multiple-choice quiz generation
 - Flashcard generation
 - Structured JSON AI response validation
 
 ### 📊 Quiz System
+
 - Score calculation
 - Answer validation
 - Performance tracking
 
 ### 🎨 UI/UX
+
 - Fully responsive design
 - Modern UI with Tailwind CSS
 - Interactive quiz cards
@@ -80,6 +84,7 @@ The platform integrates Google Gemini API for structured AI content generation a
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - React
 - React Router
 - Tailwind CSS
@@ -87,6 +92,7 @@ The platform integrates Google Gemini API for structured AI content generation a
 - Lucide Icons
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -97,9 +103,11 @@ The platform integrates Google Gemini API for structured AI content generation a
 - pdf-parse
 
 ### AI Integration
+
 - Google Gemini API
 
 ### Deployment
+
 - Frontend → Vercel
 - Backend → Render
 - Database → MongoDB Atlas
@@ -189,9 +197,11 @@ GEMINI_API_KEY=your_gemini_api_key
 ### 🔐 Auth Routes
 
 #### Register User
+
 `POST /api/auth/register`
 
 **Request**
+
 ```json
 {
   "name": "test",
@@ -201,6 +211,7 @@ GEMINI_API_KEY=your_gemini_api_key
 ```
 
 **Response**
+
 ```json
 {
   "token": "jwt_token"
@@ -208,6 +219,7 @@ GEMINI_API_KEY=your_gemini_api_key
 ```
 
 #### Login User
+
 `POST /api/auth/login`
 
 ---
@@ -215,6 +227,7 @@ GEMINI_API_KEY=your_gemini_api_key
 ### 📄 Document Routes
 
 #### Upload Document
+
 `POST /api/documents/upload`
 
 - Accepts: PDF file
@@ -224,6 +237,7 @@ GEMINI_API_KEY=your_gemini_api_key
   - Flashcards
 
 #### Get All Documents
+
 `GET /api/documents`
 
 ---
@@ -231,32 +245,33 @@ GEMINI_API_KEY=your_gemini_api_key
 ### 📝 Quiz Routes
 
 #### Submit Quiz
+
 `POST /api/quiz/submit`
 
 ---
 
 ## 🔐 Authentication Flow
 
-1. User registers  
-2. Password hashed using bcrypt  
-3. JWT token generated  
-4. Token sent to frontend  
-5. Protected routes validated via middleware  
+1. User registers
+2. Password hashed using bcrypt
+3. JWT token generated
+4. Token sent to frontend
+5. Protected routes validated via middleware
 
 ---
 
 ## 🤖 AI Processing Pipeline
 
-1. User uploads PDF  
-2. Text extracted using pdf-parse  
-3. Structured prompt created  
+1. User uploads PDF
+2. Text extracted using pdf-parse
+3. Structured prompt created
 4. Gemini API generates:
    - Summary
    - Quiz
-   - Flashcards  
-5. Backend validates JSON structure  
-6. Data stored in MongoDB  
-7. Frontend renders AI output  
+   - Flashcards
+5. Backend validates JSON structure
+6. Data stored in MongoDB
+7. Frontend renders AI output
 
 ---
 
@@ -274,14 +289,19 @@ GEMINI_API_KEY=your_gemini_api_key
 ## 🚀 Deployment
 
 ### Frontend
+
 Deploy using:
+
 - Vercel
 
 ### Backend
+
 Deploy using:
+
 - Render
 
 ### Database
+
 - MongoDB Atlas
 
 ---
@@ -304,6 +324,7 @@ Deploy using:
 - Edge-case AI response handling
 
 Test Credentials:
+
 ```
 Email: test@gmail.com
 Password: test@123
@@ -314,20 +335,25 @@ Password: test@123
 ## 📷 Screenshots
 
 ### ER Diagram Database
-![ER Diagram](DB.png)
+
+![ER Diagram](screenshots/DB.png)
 
 ### Dashboard
-![Dashboard](image.png)
+
+![Dashboard](screenshots/image.png)
 
 ### Upload Page
-![Document](image-1.png)
-![Document Upload](image-2.png)
+
+![Document](screenshots/image-1.png)
+![Document Upload](screenshots/image-2.png)
 
 ### Quiz Interface
-![Quiz](image-4.png)
+
+![Quiz](screenshots/image-4.png)
 
 ### Flashcards Page
-![Flashcard](image-3.png)
+
+![Flashcard](screenshots/image-3.png)
 
 ---
 
