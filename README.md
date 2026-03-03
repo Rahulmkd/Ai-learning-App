@@ -313,6 +313,9 @@ Password: test@123
 
 ## 📷 Screenshots
 
+### ER Diagram Database
+![ER Diagram](DB.png)
+
 ### Dashboard
 ![Dashboard](image.png)
 
