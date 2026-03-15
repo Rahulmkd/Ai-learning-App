@@ -67,7 +67,7 @@ const DocumentListPage = () => {
       setLoading(true);
       fetchDocuments();
     } catch (error) {
-      toast.error(error.message || "Upload failed.");
+      toast.error(error.message || "PDF failed to upload.");
     } finally {
       setUploading(false);
     }
@@ -218,9 +218,9 @@ const DocumentListPage = () => {
                   <input
                     id="file-upload"
                     type="file"
+                    accept=".pdf,application/pdf"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     onChange={handleFileChange}
-                    accept=".pdf"
                   />
 
                   <div className="flex flex-col items-center justify-center py-10 px-6">

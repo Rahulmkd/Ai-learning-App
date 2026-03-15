@@ -40,7 +40,11 @@ const errorHandler = (err, req, res, next) => {
     statusCode = 401;
   }
 
-  console.error("Error:", err.message);
+  // 🔴 IMPORTANT DEBUG LOGS
+  console.error("FULL ERROR OBJECT:");
+  console.error(err);
+  console.error("ERROR STACK:");
+  console.error(err.stack);
 
   res.status(statusCode).json({
     success: false,

@@ -1,24 +1,17 @@
 import multer from "multer";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "./cloudinary.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const uploadDir = path.join(__dirname, "../uploads/documents");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configure Storage
-const storage = multer.diskStorage({
-  destination: (req, file, cd) => {
-    cd(null, uploadDir);
-  },
-  filename: (req, file, cd) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cd(null, `${uniqueSuffix}-${file.originalname}`);
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "user_document",
+    resource_type: "raw",
+    allowed_formats: ["pdf"],
+    format: "pdf",
+    public_id: (req, file) => {
+      return Date.now() + "_" + file.originalname.replace(".pdf", "");
+    },
   },
 });
 
@@ -34,7 +27,7 @@ const fileFilter = (req, file, cd) => {
 // Configure multer
 const upload = multer({
   storage: storage,
-  fileFilter: fileFilter,
+  fileFilter,
   limits: {
     fileSize: parseInt(process.env.MAX_FILE_SIZE) || 10485760, // 10MB default
   },
