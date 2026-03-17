@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  generateDocumentInfo,
   generateFlashcards,
   generateQuiz,
   generateSummary,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.use(protect);
 
+router.post("/generate-document-info", generateDocumentInfo);
 router.post("/generate-flashcards", generateFlashcards);
 router.post("/generate-quiz", generateQuiz);
 router.post("/generate-summary", generateSummary);

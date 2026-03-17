@@ -1,6 +1,7 @@
 import Document from "../models/Document.js";
 import Flashcard from "../models/Flashcard.js";
 import Quiz from "../models/Quiz.js";
+import ChatHistory from "../models/ChatHistory.js";
 import { extractTextFromPDF } from "../utils/pdfParser.js";
 import { chunkText } from "../utils/textChunker.js";
 import fs from "fs/promises";
@@ -216,7 +217,22 @@ export const deleteDocument = async (req, res, next) => {
       "user_document/" + document.filePath.split("/").pop().split(".")[0];
 
     await cloudinary.uploader.destroy(publicId, {
-      resource_type: "row",
+      resource_type: "raw",
+    });
+
+    // Delete Flashcard Database of this document
+    await Flashcard.deleteMany({
+      documentId: document._id,
+    });
+
+    // Delete Quiz database of this document
+    await Quiz.deleteMany({
+      documentId: document._id,
+    });
+
+    // Delete Chat History database of this document
+    await ChatHistory.deleteMany({
+      documentId: document._id,
     });
 
     //Delete document

@@ -1,9 +1,91 @@
+import DocumentInfo from "../models/DocumentInfo.js";
 import Document from "../models/Document.js";
 import Flashcard from "../models/Flashcard.js";
 import Quiz from "../models/Quiz.js";
 import ChatHistory from "../models/ChatHistory.js";
 import * as geminiService from "../utils/geminiService.js";
 import { findRelevantChunks } from "../utils/textChunker.js";
+
+// @desc Generate document Generate-Documen-Info
+// @route POST /api/ai/generate-document-info
+// @access Private
+
+export const generateDocumentInfo = async (req, res, next) => {
+  try {
+    const { documentId } = req.body;
+
+    // 1. Validate input
+    if (!documentId) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide documentId",
+        statusCode: 400,
+      });
+    }
+
+    // 2. Check if already exists (avoid AI call)
+    let documentInfo = await DocumentInfo.findOne({
+      userId: req.user._id,
+      documentId,
+    });
+
+    if (documentInfo) {
+      return res.status(200).json({
+        success: true,
+        data: documentInfo,
+        message: "Document Info (cached)",
+      });
+    }
+
+    // 3. Get document
+    const document = await Document.findOne({
+      _id: documentId,
+      userId: req.user._id,
+      status: "ready",
+    });
+
+    if (!document) {
+      return res.status(404).json({
+        success: false,
+        error: "Document not found or not ready",
+        statusCode: 404,
+      });
+    }
+
+    // 4. Generate AI content
+    const { headline, about, cards } = await geminiService.generateDocumentInfo(
+      document.extractedText,
+    );
+
+    // 5. Try to create (handle race condition)
+    documentInfo = await DocumentInfo.findOneAndUpdate(
+      {
+        userId: req.user._id,
+        documentId: document._id,
+      },
+      {
+        headline,
+        about,
+        cards: cards.map((card) => ({
+          topic: card.topic,
+          summary: card.summary,
+        })),
+      },
+      {
+        new: true,
+        upsert: true,
+      },
+    );
+    // 6. Response
+    return res.status(200).json({
+      success: true,
+      data: documentInfo,
+      message: "Document Information generated successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // @desc Generate flashcards from document
 // @route POST /api/ai/generate-flashcards

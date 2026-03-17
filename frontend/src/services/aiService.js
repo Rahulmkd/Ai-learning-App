@@ -1,6 +1,21 @@
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 
+const generateDocumentInfo = async (documentId) => {
+  try {
+    const response = await axiosInstance.post(API_PATHS.AI.GENERATE_DOC_INFO, {
+      documentId,
+    });
+    return response.data;
+  } catch (error) {
+    throw (
+      error.response?.data || {
+        message: "Failed to get document information",
+      }
+    );
+  }
+};
+
 const generateFlashcards = async (documentId, options) => {
   try {
     const response = await axiosInstance.post(
@@ -72,6 +87,7 @@ const getChatHistory = async (documentId) => {
 };
 
 const aiService = {
+  generateDocumentInfo,
   generateFlashcards,
   generateQuiz,
   generateSummary,

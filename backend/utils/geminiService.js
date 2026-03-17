@@ -13,6 +13,98 @@ if (!process.env.GEMINI_API_KEY) {
 }
 
 /**
+ * Generate document headline
+ * @param {string} text - Document text
+ * @returns {Promise<string>}
+ */
+
+export const generateDocumentInfo = async (text, count = 9) => {
+  const prompt = `
+Analyze the following document text and generate:
+
+1. headline: One concise headline (6–12 words)
+2. about: A 4–5 sentence summary explaining the document in simple language
+3. ${count} education cards
+
+Card format:
+topic: Short title (3–6 words)
+summary: Simple 1–2 sentence explanation
+
+Return response EXACTLY in this format:
+
+headline: <headline text>
+
+about:
+<about paragraph>
+
+cards:
+---
+topic: ...
+summary: ...
+---
+topic: ...
+summary: ...
+---
+
+Text:
+${text.substring(0, 20000)}
+`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash-lite",
+      contents: prompt,
+    });
+
+    const generatedText = response.text;
+
+    // Split headline
+    const headlineMatch = generatedText.match(/headline:(.*)/i);
+    const headline = headlineMatch ? headlineMatch[1].trim() : "";
+
+    // Split about
+    const aboutMatch = generatedText.match(/about:\s*([\s\S]*?)cards:/i);
+    const about = aboutMatch ? aboutMatch[1].trim() : "";
+
+    // Split cards
+    const cardSection = generatedText.split("cards:")[1] || "";
+    const cardBlocks = cardSection.split("---").filter((c) => c.trim());
+
+    const cards = [];
+
+    for (const block of cardBlocks) {
+      const lines = block.trim().split("\n");
+
+      let topic = "";
+      let summary = "";
+
+      for (const line of lines) {
+        if (line.toLowerCase().startsWith("topic:")) {
+          topic = line.substring(6).trim();
+        }
+
+        if (line.toLowerCase().startsWith("summary:")) {
+          summary = line.substring(8).trim();
+        }
+      }
+
+      if (topic && summary) {
+        cards.push({ topic, summary });
+      }
+    }
+
+    return {
+      headline,
+      about,
+      cards: cards.slice(0, count),
+    };
+  } catch (error) {
+    console.error("Gemini API error:", error);
+    throw new Error("Failed to generate document info");
+  }
+};
+
+/**
  * Generate flashcards from text
  * @param {string} text -Document text
  * @param {number} count -Number of flashcards to generate
