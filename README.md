@@ -8,7 +8,12 @@ Built with React, Node.js, MongoDB, and Google Gemini API, this platform reduces
 
 ## 🚀 Live Demo
 
-🌐 link------
+🌐 link- https://ai-learning-app-smoky.vercel.app
+
+## For testing perpose
+
+Email id - test@gmail.com
+Password - Test@123
 
 ---
 
