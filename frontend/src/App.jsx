@@ -18,6 +18,7 @@ import QuizResultPage from "./pages/Quizzes/QuizResultPage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useAuth } from "./context/AuthContext";
+import Spinner from "./components/common/Spinner";
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -25,7 +26,7 @@ const App = () => {
   if (loading) {
     return (
       <div className="">
-        <p>Loading....</p>
+        <Spinner />
       </div>
     );
   }
