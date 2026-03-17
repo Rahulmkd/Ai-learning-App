@@ -1,4 +1,6 @@
-export const BASE_URL = "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL;
+
+export const BASE_URL = API;
 
 export const API_PATHS = {
   AUTH: {
