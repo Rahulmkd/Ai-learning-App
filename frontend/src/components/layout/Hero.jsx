@@ -162,7 +162,7 @@ const Hero = () => {
               </button>
             </NavLink>
 
-            <a href="#AiFeatures">
+            <a href="#AIFeatures">
               <button className="group relative w-45 h-12 active:scale-95 bg-white rounded-xl transition-all duration-200 focus:outline-none focus:ring-1  disabled:opacity-50 shadow-lg shadow-indigo-500/25 overflow-hidden cursor-pointer">
                 <span className="relative z-10 flex items-center justify-center gap-1">
                   Explore Demo

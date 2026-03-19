@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "../../components/layout/Hero";
 import Footer from "../../components/layout/Footer";
-import AiFeatures from "../../components/ai/AIFeatures";
+import AIFeatures from "../../components/ai/AIFeatures";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/common/Spinner";
 
@@ -21,8 +21,8 @@ const Home = () => {
         <Hero />
       </section>
 
-      <section id="AiFeatures">
-        <AiFeatures />
+      <section id="AIFeatures">
+        <AIFeatures />
       </section>
 
       <Footer />
