@@ -1,29 +1,31 @@
 import React from "react";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 import {
   LayoutDashboard,
   FileText,
-  User,
   LogOut,
-  BrainCircuit,
   BookOpen,
   X,
+  Home,
+  Users,
 } from "lucide-react";
-import logo from "../../components/layout/logo/logo.png";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { logout } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
   };
 
   const navLinks = [
+    {
+      to: "/",
+      icon: Home,
+      text: "Home",
+    },
     {
       to: "/dashboard",
       icon: LayoutDashboard,
@@ -40,9 +42,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       text: "Flashcards",
     },
     {
-      to: "/profile",
-      icon: User,
-      text: "Profile",
+      to: "/community",
+      icon: Users,
+      text: "Community",
     },
   ];
 
@@ -58,13 +60,14 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       >
         {/* Logo and Close button for mobile */}
         <div className="flex items-center justify-between h-16 border-b border-slate-200/60">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl shadow-md shadow-indigo-500/20">
-              <img src={logo} alt="Logo" />
-            </div>
-            <h1 className="text-sm md:text-base font-bold text-slate-900 tracking-tight">
-              AI Learning Platform
-            </h1>
+          <div className="flex items-center justify-center w-20 h-20 ml-15 mt-5 rounded-xl">
+            <NavLink to="/">
+              <img
+                src="/logo.svg"
+                alt="Logo"
+                className="w-10 h-10 cursor-pointer"
+              />
+            </NavLink>
           </div>
           <button
             onClick={toggleSidebar}

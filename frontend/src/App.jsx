@@ -19,13 +19,14 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useAuth } from "./context/AuthContext";
 import Spinner from "./components/common/Spinner";
+import Home from "./pages/Home/Home";
 
 const App = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="">
+      <div className="flex items-center justify-center h-screen">
         <Spinner />
       </div>
     );
@@ -34,17 +35,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 

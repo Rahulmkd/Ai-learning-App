@@ -7,9 +7,10 @@ import Spinner from "../common/Spinner";
 const ProtectedRoute = () => {
   const { isAuthenticated, loading } = useAuth();
 
+  // Show loader while auth is being checked
   if (loading) {
     return (
-      <div>
+      <div className="flex items-center justify-center h-screen">
         <Spinner />
       </div>
     );
