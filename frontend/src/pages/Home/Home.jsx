@@ -1,9 +1,9 @@
 import React from "react";
 import Hero from "../../components/layout/Hero";
 import Footer from "../../components/layout/Footer";
-import AIFeatures from "../../components/ai/AIFeatures";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/common/Spinner";
+import AiSection from "../../components/ai/AiSection";
 
 const Home = () => {
   const { loading } = useAuth();
@@ -21,8 +21,8 @@ const Home = () => {
         <Hero />
       </section>
 
-      <section id="AIFeatures">
-        <AIFeatures />
+      <section id="AiSection">
+        <AiSection />
       </section>
 
       <Footer />

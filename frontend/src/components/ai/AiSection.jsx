@@ -1,7 +1,7 @@
 import React from "react";
 import { AiToolsData } from "../../assets/assets";
 
-const AIFeatures = () => {
+const AiSection = () => {
   return (
     <div className="px-4 sm:px-20 xl:px-32">
       <div className="text-center">
@@ -37,4 +37,4 @@ const AIFeatures = () => {
   );
 };
 
-export default AIFeatures;
+export default AiSection;
