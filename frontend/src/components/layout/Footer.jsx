@@ -54,18 +54,23 @@ const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold text-gray-800 mb-4">Stay Updated</h2>
+            <h2 className="font-semibold text-gray-800 mb-4 text-base sm:text-lg">
+              Stay Updated
+            </h2>
+
             <div className="text-sm space-y-2">
-              <p>
-                Get product updates, and new features delivered to your inbox.
+              <p className="text-gray-600">
+                Get product updates and new features delivered to your inbox.
               </p>
-              <div className="flex items-center gap-2 pt-4">
+
+              <div className="flex flex-col sm:flex-row gap-2 pt-4">
                 <input
-                  className="flex-1 h-10 px-3 rounded-md border border-gray-300 outline-none focus:ring-1 focus:ring-indigo-500 text-sm"
+                  className="w-full h-10 px-3 rounded-md border border-gray-300 outline-none focus:ring-1 focus:ring-indigo-500 text-sm"
                   type="email"
                   placeholder="Enter your email"
                 />
-                <button className="h-10 px-4 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-700 transition cursor-pointer">
+
+                <button className="w-full sm:w-auto h-10 px-4 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-700 transition cursor-pointer">
                   Subscribe
                 </button>
               </div>
