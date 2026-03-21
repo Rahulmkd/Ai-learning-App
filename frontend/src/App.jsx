@@ -20,6 +20,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { useAuth } from "./context/AuthContext";
 import Spinner from "./components/common/Spinner";
 import Home from "./pages/Home/Home";
+import Features from "./pages/Home/Features";
+import About from "./pages/Home/About";
+import Contact from "./pages/Home/Contact";
+import Privacy from "./pages/Home/Privacy";
+import Community from "./pages/Community/Community";
+import CreateNote from "./pages/Community/CreateNote";
 
 const App = () => {
   const { loading } = useAuth();
@@ -37,6 +43,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
@@ -49,6 +59,8 @@ const App = () => {
           <Route path="/documents/:id/flashcards" element={<FlashcardPage />} />
           <Route path="/quizzes/:quizId" element={<QuizTakePage />} />
           <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/create" element={<CreateNote />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
