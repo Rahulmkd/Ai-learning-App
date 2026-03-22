@@ -25,7 +25,7 @@ import About from "./pages/Home/About";
 import Contact from "./pages/Home/Contact";
 import Privacy from "./pages/Home/Privacy";
 import Community from "./pages/Community/Community";
-import CreateNote from "./pages/Community/CreateNote";
+import CreatePost from "./pages/Community/CreatePost";
 
 const App = () => {
   const { loading } = useAuth();
@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/quizzes/:quizId" element={<QuizTakePage />} />
           <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />
           <Route path="/community" element={<Community />} />
-          <Route path="/create" element={<CreateNote />} />
+          <Route path="/create" element={<CreatePost />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
