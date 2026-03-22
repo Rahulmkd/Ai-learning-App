@@ -13,6 +13,7 @@ import aiRoutes from "./routes/aiRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
 import progressRoutes from "./routes/progressRoutes.js";
 
+import postRoutes from "./routes/postRouters.js";
 // Initialize express app
 const app = express();
 
@@ -39,6 +40,9 @@ app.use("/api/flashcards", flashcardRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/quizzes", quizRoutes);
 app.use("/api/progress", progressRoutes);
+
+// Post Content Routes
+app.use("/api/post", postRoutes);
 
 app.use(errorHandler);
 
