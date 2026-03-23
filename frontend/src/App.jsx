@@ -25,7 +25,8 @@ import About from "./pages/Home/About";
 import Contact from "./pages/Home/Contact";
 import Privacy from "./pages/Home/Privacy";
 import Community from "./pages/Community/Community";
-import CreatePost from "./pages/Community/CreatePost";
+import CreatePost from "./components/community/CreatePost";
+
 
 const App = () => {
   const { loading } = useAuth();

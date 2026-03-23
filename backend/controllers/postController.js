@@ -48,7 +48,7 @@ export const getPosts = async (req, res, next) => {
       .sort({
         createdAt: -1,
       })
-      .populate("authorId", "name")
+      .populate("authorId", "username")
       .lean();
 
     res.status(200).json({
@@ -67,8 +67,8 @@ export const getPosts = async (req, res, next) => {
 export const getPostById = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
-      .populate("authorId", "name")
-      .populate("comments.userId", "name");
+      .populate("authorId", "username")
+      .populate("comments.userId", "username");
 
     if (!post || post.isDeleted) {
       return res.status(404).json({

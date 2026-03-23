@@ -1,30 +1,35 @@
 import { Flame, SquarePen } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PostContent from "./PostContent";
+import PostContent from "../../components/community/PostContent";
+import postService from "../../services/postService";
+
+const tabLists = [
+  { tab: "For You", value: "forYou", icon: Flame },
+  { tab: "Career", value: "career" },
+  { tab: "Interview", value: "interview" },
+  { tab: "Feedback", value: "feedback" },
+];
 
 const Community = () => {
+  const [posts, setPosts] = useState([]);
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("forYou");
 
-  const tabLists = [
-    { tab: "For You", value: "forYou", icon: Flame },
-    { tab: "Career", value: "career" },
-    { tab: "Interview", value: "interview" },
-    { tab: "Feedback", value: "feedback" },
-  ];
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await postService.getPosts(activeTab);
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch post data:", error);
+      }
+    };
+    fetchPosts();
+  }, [activeTab]);
 
-  const POSTS = [
-    {
-      id: 1,
-      title: "Cleartrip - Flipkart (UI Developer 1) - Offer Discussion",
-      time: "2 hours ago",
-      like: 2,
-      comments: 1,
-      note: "Got an offer from Cleartrip (UI 1 role) and wanted some opinions on whether it's a good move. YOE: ~1.6 years. Offer details (Cleartrip): Base: 16.5 LPA · Bonus: 1.65 LPA · Stocks: ~1.75 LPA · Total: ~20 LPA. Current compensation (Service-based AI company): Base: 12 LPA · Total: ~14 LPA. Looking for advice on whether the switch makes sense given the role, company trajectory, and overall package.",
-    },
- 
-  ];
+  console.log(posts);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -75,8 +80,8 @@ const Community = () => {
       {/* Posts */}
       <div className="w-full md:w-[85%] mx-auto mt-6 px-3 sm:px-4">
         <div className="space-y-4">
-          {POSTS.map((post) => (
-            <PostContent key={post.id} post={post} />
+          {posts.map((post) => (
+            <PostContent key={post._id} post={post} />
           ))}
         </div>
       </div>

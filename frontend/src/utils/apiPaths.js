@@ -48,4 +48,9 @@ export const API_PATHS = {
   PROGRESS: {
     GET_DASHBOARD: "/api/progress/dashboard",
   },
+
+  POST: {
+    SUBMIT_POST: "/api/post",
+    GET_POSTS: "/api/post",
+  },
 };

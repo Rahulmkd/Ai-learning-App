@@ -1,4 +1,11 @@
-import { Bookmark, Ellipsis, Heart, MessageCircle, User } from "lucide-react";
+import {
+  Bookmark,
+  Ellipsis,
+  Heart,
+  MessageCircle,
+  Share,
+  User,
+} from "lucide-react";
 import React, { useState } from "react";
 
 const PostContent = ({ post }) => {
@@ -16,12 +23,14 @@ const PostContent = ({ post }) => {
         {/* Title + Meta */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500">
-            <span className="font-semibold text-gray-900">Anonymous User</span>
+            <span className="font-semibold text-gray-900">
+              {post.authorId?.username}
+            </span>
             <span>·</span>
             <span>{post.time}</span>
           </div>
 
-          <p className="mt-1 text-sm sm:text-base font-semibold text-gray-900 line-clamp-2 hover:text-blue-600 cursor-pointer">
+          <p className="mt-1 text-sm sm:text-base font-semibold text-gray-900 line-clamp-2 ">
             {post.title}
           </p>
         </div>
@@ -37,7 +46,7 @@ const PostContent = ({ post }) => {
 
           {menuOpen && (
             <div className="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-20">
-              {["Copy link", "Report"].map((item) => (
+              {["Delete", "Copy link", "Report"].map((item) => (
                 <div
                   key={item}
                   onClick={() => setMenuOpen(false)}
@@ -52,7 +61,7 @@ const PostContent = ({ post }) => {
       </div>
 
       {/* Content */}
-      <p className="mt-3 text-sm text-gray-700 line-clamp-4">{post.note}</p>
+      <p className="mt-3 text-sm text-gray-700 line-clamp-4">{post.content}</p>
 
       {/* Divider */}
       <div className="border-t my-3" />
@@ -69,6 +78,10 @@ const PostContent = ({ post }) => {
           <button className="flex items-center gap-1 hover:text-blue-500">
             <MessageCircle size={18} />
             {post.comments}
+          </button>
+
+          <button className="flex items-center gap-1 hover:text-green-500">
+            <Share size={18} />
           </button>
         </div>
 
