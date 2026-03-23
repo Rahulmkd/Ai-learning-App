@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Bookmark,
   Ellipsis,
@@ -6,10 +7,54 @@ import {
   Share,
   User,
 } from "lucide-react";
-import React, { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
-const PostContent = ({ post }) => {
+const PostContent = ({ post, onDelete }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { user } = useAuth();
+  const isOwner = user?.id?.toString() === post?.authorId?._id?.toString();
+
+  const baseItems = [
+    { label: "Copy link", key: "copy" },
+    { label: "Report", key: "report" },
+  ];
+  const ownerItems = [
+    { label: "Delete", key: "delete", danger: true },
+    { label: "Edit", key: "edit" },
+  ];
+  const menuItems = isOwner ? [...ownerItems, ...baseItems] : baseItems;
+
+  const menuActions = {
+    delete: async () => {
+      const confirmDelete = window.confirm("Are you sure?");
+      if (!confirmDelete) return;
+
+      try {
+        await onDelete(post._id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    copy: () => {
+      navigator.clipboard.writeText(
+        `${window.location.origin}/post/${post._id}`,
+      );
+    },
+
+    report: () => {
+      console.log("Report id:", post._id);
+    },
+  };
+
+  const handleMenuAction = async (key) => {
+    setMenuOpen(false);
+    const action = menuActions[key];
+    if (action) {
+      await action();
+    }
+  };
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm hover:shadow-md transition relative">
@@ -46,13 +91,15 @@ const PostContent = ({ post }) => {
 
           {menuOpen && (
             <div className="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-20">
-              {["Delete", "Copy link", "Report"].map((item) => (
+              {menuItems.map((item) => (
                 <div
-                  key={item}
-                  onClick={() => setMenuOpen(false)}
-                  className="px-4 py-2 text-sm hover:bg-gray-50 cursor-pointer"
+                  key={item.key}
+                  onClick={() => handleMenuAction(item.key)}
+                  className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-50 ${
+                    item.danger ? "text-red-500" : ""
+                  }`}
                 >
-                  {item}
+                  {item.label}
                 </div>
               ))}
             </div>

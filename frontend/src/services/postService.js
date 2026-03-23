@@ -23,8 +23,19 @@ const getPosts = async () => {
   }
 };
 
+const deletePost = async (id) => {
+  try {
+    const response = await axiosInstance.delete(API_PATHS.POST.DELETE_POST(id));
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to delete Post" };
+  }
+};
+
 const postService = {
   submitPost,
   getPosts,
+  deletePost,
 };
 export default postService;

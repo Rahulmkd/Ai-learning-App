@@ -2,6 +2,7 @@ import { ArrowRight, Menu, TrendingUp, X } from "lucide-react";
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+
 const Hero = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const { isAuthenticated } = useAuth();

@@ -29,7 +29,15 @@ const Community = () => {
     fetchPosts();
   }, [activeTab]);
 
-  console.log(posts);
+  const handleDeletePost = async (id) => {
+    try {
+      await postService.deletePost(id);
+      // remove deleted post from UI
+      setPosts((prev) => prev.filter((post) => post._id !== id));
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -81,7 +89,11 @@ const Community = () => {
       <div className="w-full md:w-[85%] mx-auto mt-6 px-3 sm:px-4">
         <div className="space-y-4">
           {posts.map((post) => (
-            <PostContent key={post._id} post={post} />
+            <PostContent
+              key={post._id}
+              post={post}
+              onDelete={handleDeletePost}
+            />
           ))}
         </div>
       </div>
