@@ -14,7 +14,7 @@ const tabLists = [
 
 const Community = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [openMenuId, setOpenMenuId] = useState(null);
 
   const navigate = useNavigate();
