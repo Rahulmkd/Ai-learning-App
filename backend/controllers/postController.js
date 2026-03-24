@@ -92,7 +92,7 @@ export const getPostById = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, topics, attachments } = req.body;
 
     const post = await Post.findById(req.params.id);
 
@@ -115,6 +115,8 @@ export const updatePost = async (req, res, next) => {
 
     if (title) post.title = title;
     if (content) post.content = content;
+    if (topics) post.topics = topics;
+    if (attachments) post.attachments = attachments;
 
     post.isEdited = true;
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostContent from "../../components/community/PostContent";
 import postService from "../../services/postService";
+import Spinner from "../../components/common/Spinner";
 
 const tabLists = [
   { tab: "For You", value: "forYou", icon: Flame },
@@ -13,27 +14,32 @@ const tabLists = [
 
 const Community = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [openMenuId, setOpenMenuId] = useState(null);
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("forYou");
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const response = await postService.getPosts(activeTab);
         setPosts(response.data);
       } catch (error) {
         console.error("Failed to fetch post data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPosts();
   }, [activeTab]);
 
-  const handleDeletePost = async (id) => {
+  const handleDeletePost = async (postId) => {
     try {
-      await postService.deletePost(id);
+      await postService.deletePost(postId);
       // remove deleted post from UI
-      setPosts((prev) => prev.filter((post) => post._id !== id));
+      setPosts((prev) => prev.filter((post) => post._id !== postId));
     } catch (error) {
       console.error("Delete failed:", error);
     }
@@ -88,13 +94,24 @@ const Community = () => {
       {/* Posts */}
       <div className="w-full md:w-[85%] mx-auto mt-6 px-3 sm:px-4">
         <div className="space-y-4">
-          {posts.map((post) => (
-            <PostContent
-              key={post._id}
-              post={post}
-              onDelete={handleDeletePost}
-            />
-          ))}
+          {/* ✅ Loading UI */}
+          {loading ? (
+            <div className="flex justify-center items-center py-10">
+              <Spinner />
+            </div>
+          ) : posts.length === 0 ? (
+            <p className="text-center text-gray-500">No posts found</p>
+          ) : (
+            posts.map((post) => (
+              <PostContent
+                key={post._id}
+                post={post}
+                onDelete={handleDeletePost}
+                openMenuId={openMenuId}
+                setOpenMenuId={setOpenMenuId}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

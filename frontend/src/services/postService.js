@@ -23,9 +23,35 @@ const getPosts = async () => {
   }
 };
 
-const deletePost = async (id) => {
+const getPostById = async (postId) => {
   try {
-    const response = await axiosInstance.delete(API_PATHS.POST.DELETE_POST(id));
+    const response = await axiosInstance.get(
+      API_PATHS.POST.GET_POSTS_BY_ID(postId),
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to Get Post" };
+  }
+};
+
+const updatePost = async (postId, post) => {
+  try {
+    const response = await axiosInstance.put(
+      API_PATHS.POST.UPDATE_POST(postId),
+      { ...post },
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to update Post" };
+  }
+};
+
+const deletePost = async (postId) => {
+  try {
+    const response = await axiosInstance.delete(
+      API_PATHS.POST.DELETE_POST(postId),
+    );
 
     return response.data;
   } catch (error) {
@@ -36,6 +62,8 @@ const deletePost = async (id) => {
 const postService = {
   submitPost,
   getPosts,
+  getPostById,
+  updatePost,
   deletePost,
 };
 export default postService;

@@ -27,7 +27,6 @@ import Privacy from "./pages/Home/Privacy";
 import Community from "./pages/Community/Community";
 import CreatePost from "./components/community/CreatePost";
 
-
 const App = () => {
   const { loading } = useAuth();
 
@@ -62,6 +61,7 @@ const App = () => {
           <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/create" element={<CreatePost />} />
+          <Route path="/create/:postId" element={<CreatePost />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
