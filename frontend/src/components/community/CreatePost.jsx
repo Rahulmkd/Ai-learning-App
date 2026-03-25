@@ -9,7 +9,7 @@ const CreatePost = () => {
   const { postId } = useParams();
   const isEdit = Boolean(postId);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [post, setPost] = useState({
     title: "",

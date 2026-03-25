@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Bookmark,
   Ellipsis,
@@ -11,7 +10,6 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
-
   const navigate = useNavigate();
   const { user } = useAuth();
   const menuOpen = openMenuId === post._id;
@@ -41,7 +39,7 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
     },
 
     edit: () => {
-      navigate(`/Create/${post._id}`);
+      navigate(`/community/create/${post._id}`);
     },
 
     copy: () => {
@@ -62,7 +60,7 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
   };
 
   const handleCardClick = () => {
-    navigate(`/post/${post._id}`);
+    navigate(`/community/post/${post._id}`);
   };
 
   return (

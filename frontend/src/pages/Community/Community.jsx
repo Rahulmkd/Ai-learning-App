@@ -82,7 +82,7 @@ const Community = () => {
 
           {/* Create Button */}
           <button
-            onClick={() => navigate("/create")}
+            onClick={() => navigate("/community/create")}
             className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02]"
           >
             <SquarePen size={16} />
