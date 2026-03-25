@@ -4,25 +4,32 @@ import {
   Heart,
   MessageCircle,
   Share2,
-  MoreHorizontal,
   User,
   Paperclip,
-  Send,
+  Ellipsis,
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import moment from "moment";
 
-const PostDetail = ({ post }) => {
+const PostDetail = () => {
+  const { state } = useLocation();
+  const post = state?.post;
+
   return (
-    <div className="max-w-3xl mx-auto p-4 sm:p-6">
+    <div className="max-w-5xl mx-auto p-4 sm:p-6">
       {/* MAIN CARD */}
-      <div className="shadow-sm  p-6">
+      <div className="m-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <button className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
-            <ArrowLeft size={20} />
-          </button>
+          <Link
+            to="/community"
+            className="p-2 rounded-full  hover:bg-gray-100 cursor-pointer"
+          >
+            <ArrowLeft size={18} />
+          </Link>
 
           <button className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
-            <MoreHorizontal size={20} />
+            <Ellipsis size={18} />
           </button>
         </div>
 
@@ -39,25 +46,23 @@ const PostDetail = ({ post }) => {
 
           <div>
             <p className="text-sm font-medium text-gray-700">
-              {post?.author || "Anonymous"}
+              {post.authorId?.username}
             </p>
             <div className="flex gap-2 text-xs text-gray-500">
-              <span>{post?.createdAt || "Date"}</span>
-              <span>•</span>
-              <span>{post?.updatedAt || "Edited"}</span>
+              <span>{moment(post.createdAt).fromNow()}</span>
             </div>
           </div>
         </div>
 
         {/* Topic */}
         <div className="mb-4">
-          <span className="inline-block bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full font-medium">
-            {post?.topic || "Topic"}
+          <span className="inline-block text-blue-600 text-xs px-3 py-1 rounded-full font-medium">
+            {post?.topic}
           </span>
         </div>
 
         {/* Content */}
-        <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap mb-6">
+        <div className="text-gray-700 text-sx leading-relaxed whitespace-pre-wrap mb-6">
           {post?.content || "Post content goes here..."}
         </div>
 
@@ -65,30 +70,27 @@ const PostDetail = ({ post }) => {
         <div className="flex items-center gap-6 text-gray-600 border-t pt-4">
           <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition">
             <Heart size={18} />
-            <span className="text-sm">Like</span>
           </button>
 
           <button className="flex items-center gap-2 hover:text-blue-500 cursor-pointer transition">
             <MessageCircle size={18} />
-            <span className="text-sm">Comment</span>
           </button>
 
           <button className="flex items-center gap-2 hover:text-green-500 cursor-pointer transition">
             <Share2 size={18} />
-            <span className="text-sm">Share</span>
           </button>
         </div>
       </div>
 
       {/* COMMENT SECTION */}
-      <div className="shadow-sm p-5">
+      <div className=" m-10">
         {/* Heading */}
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Comments ({post?.comments?.length || 0})
         </h2>
 
         {/* Add Comment */}
-        <div className="bg-gray-50 border rounded-xl p-4 transition">
+        <div className="bg-white shadow-sm rounded-xl p-4 transition">
           <textarea
             placeholder="Write your comment..."
             rows={3}
@@ -98,11 +100,9 @@ const PostDetail = ({ post }) => {
           <div className="flex items-center justify-between mt-3">
             <button className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm cursor-pointer">
               <Paperclip size={16} />
-              <span>Attach</span>
             </button>
 
-            <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-900 transition cursor-pointer">
-              <Send size={16} />
+            <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02]">
               <span>Comment</span>
             </button>
           </div>
