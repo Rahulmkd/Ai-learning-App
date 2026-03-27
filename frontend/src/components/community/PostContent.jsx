@@ -6,10 +6,11 @@ import {
   Share2,
   User,
 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import useDropdown from "../common/useDropdown";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import useDropdown from "../../hooks/useDropdown";
+import usePostMenu from "../../hooks/usePostMenu";
 
 const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
   const navigate = useNavigate();
@@ -17,43 +18,16 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
 
   const { ref, isOpen, toggle, close } = useDropdown(openMenuId, setOpenMenuId);
 
-  const isOwner = user?.id?.toString() === post?.authorId?._id?.toString();
-
-  const menuItems = isOwner
-    ? [
-        { label: "Delete", key: "delete", danger: true },
-        { label: "Edit", key: "edit" },
-        { label: "Copy link", key: "copy" },
-        { label: "Report", key: "report" },
-      ]
-    : [
-        { label: "Copy link", key: "copy" },
-        { label: "Report", key: "report" },
-      ];
-
-  const menuActions = {
-    delete: async () => {
-      if (!window.confirm("Are you sure?")) return;
-      await onDelete(post._id);
-    },
-    edit: () => navigate(`/community/create/${post._id}`),
-    copy: () => {
-      navigator.clipboard.writeText(
-        `${window.location.origin}/community/post/${post._id}`,
-      );
-    },
-    report: () => console.log("Report id:", post._id),
-  };
-
-  const handlePostClick = () => {
-    navigate(`/community/post/${post._id}`, {
-      state: { post },
-    });
-  };
+  const { menuItems, menuActions } = usePostMenu({
+    user,
+    post,
+    navigate,
+    onDelete,
+  });
 
   return (
     <div
-      onClick={handlePostClick}
+      onClick={() => navigate(`/community/post/${post._id}`)}
       className="group transition-all duration-300 
       relative cursor-pointer"
     >
@@ -61,7 +35,7 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
       <div className="flex items-start justify-between mt-5">
         {/* Left */}
         <div className="flex items-start gap-3 min-w-0">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center text-white shrink-0">
+          <div className="w-8 h-8 rounded-full bg-linear-to-br from-gray-800 to-gray-600 flex items-center justify-center text-white shrink-0">
             <User size={18} />
           </div>
 
@@ -82,8 +56,8 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
 
         {/* Menu */}
         <div
-          ref={ref}
           className="relative"
+          ref={ref}
           onClick={(e) => e.stopPropagation()}
         >
           <button

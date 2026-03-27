@@ -26,7 +26,7 @@ import Contact from "./pages/Home/Contact";
 import Privacy from "./pages/Home/Privacy";
 import Community from "./pages/Community/Community";
 import CreatePost from "./components/community/CreatePost";
-import PostDetail from "./components/community/PostDetail ";
+import PostView from "./components/community/PostView";
 
 const App = () => {
   const { loading } = useAuth();
@@ -63,7 +63,7 @@ const App = () => {
           <Route path="/community" element={<Community />} />
           <Route path="/community/create" element={<CreatePost />} />
           <Route path="/community/create/:postId" element={<CreatePost />} />
-          <Route path="/community/post/:postId" element={<PostDetail />} />
+          <Route path="/community/post/:postId" element={<PostView />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 

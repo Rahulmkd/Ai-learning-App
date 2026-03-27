@@ -1,10 +1,10 @@
 import { Flame, SquarePen } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostContent from "../../components/community/PostContent";
-import postService from "../../services/postService";
 import Spinner from "../../components/common/Spinner";
-
+import usePosts from "../../hooks/usePosts";
+import usePostActions from "../../hooks/usePostActions";
 const tabLists = [
   { tab: "For You", value: "forYou", icon: Flame },
   { tab: "Career", value: "career" },
@@ -13,37 +13,13 @@ const tabLists = [
 ];
 
 const Community = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("forYou");
+  const navigate = useNavigate();
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("forYou");
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      try {
-        const response = await postService.getPosts(activeTab);
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch post data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPosts();
-  }, [activeTab]);
-
-  const handleDeletePost = async (postId) => {
-    try {
-      await postService.deletePost(postId);
-      // remove deleted post from UI
-      setPosts((prev) => prev.filter((post) => post._id !== postId));
-    } catch (error) {
-      console.error("Delete failed:", error);
-    }
-  };
+  const { data: posts, isLoading } = usePosts(activeTab);
+  console.log("POSTS___DATA:", posts);
+  const { deletePost } = usePostActions();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -94,8 +70,8 @@ const Community = () => {
       {/* Posts */}
       <div className="w-full md:w-[85%] mx-auto mt-6 px-3 sm:px-4">
         <div className="space-y-4">
-          {/* ✅ Loading UI */}
-          {loading ? (
+          {/* Loading UI */}
+          {isLoading ? (
             <div className="flex justify-center items-center py-10">
               <Spinner />
             </div>
@@ -106,7 +82,7 @@ const Community = () => {
               <PostContent
                 key={post._id}
                 post={post}
-                onDelete={handleDeletePost}
+                onDelete={deletePost}
                 openMenuId={openMenuId}
                 setOpenMenuId={setOpenMenuId}
               />

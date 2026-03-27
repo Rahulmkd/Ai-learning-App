@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ArrowLeft,
   Heart,
@@ -8,17 +7,46 @@ import {
   Paperclip,
   Ellipsis,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
+import usePost from "../../hooks/usePost";
+import Spinner from "../common/Spinner";
+import { useState } from "react";
+import useDropdown from "../../hooks/useDropdown";
+import usePostMenu from "../../hooks/usePostMenu";
+import usePostActions from "../../hooks/usePostActions";
+import { useAuth } from "../../context/AuthContext";
 
-const PostDetail = () => {
-  const { state } = useLocation();
-  const post = state?.post;
+const PostView = () => {
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const { postId } = useParams();
+  const { data: post, isLoading } = usePost(postId);
+  const { deletePost } = usePostActions();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const { ref, isOpen, toggle, close } = useDropdown(openMenuId, setOpenMenuId);
+
+  const { menuItems, menuActions } = usePostMenu({
+    user,
+    post,
+    navigate,
+    onDelete: deletePost,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6">
       {/* MAIN CARD */}
-      <div className="m-10">
+      <div className="mx-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <Link
@@ -28,9 +56,49 @@ const PostDetail = () => {
             <ArrowLeft size={18} />
           </Link>
 
-          <button className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
-            <Ellipsis size={18} />
-          </button>
+          {/* Menu */}
+          <div
+            className="relative"
+            ref={ref}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle(post._id)(e);
+              }}
+              className="p-2 rounded-full hover:bg-gray-100 transition"
+            >
+              <Ellipsis size={18} />
+            </button>
+
+            {/* Dropdown */}
+            <div
+              className={`absolute right-0 mt-2 w-max bg-white rounded-xl shadow-md z-50 overflow-hidden transform transition-all duration-150 ease-out origin-top-right
+        ${
+          isOpen(post._id)
+            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 scale-95 -translate-y-1 pointer-events-none"
+        }`}
+            >
+              {menuItems.map((item) => (
+                <div
+                  key={item.key}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    close();
+                    menuActions[item.key]?.();
+                  }}
+                  className={`px-4 py-2 text-sm font-semibold cursor-pointer transition-colors
+              hover:bg-gray-50 active:bg-gray-100
+              ${item.danger ? "text-red-500" : "text-gray-700"}
+            `}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Title */}
@@ -46,10 +114,10 @@ const PostDetail = () => {
 
           <div>
             <p className="text-sm font-medium text-gray-700">
-              {post.authorId?.username}
+              {post?.authorId?.username}
             </p>
             <div className="flex gap-2 text-xs text-gray-500">
-              <span>{moment(post.createdAt).fromNow()}</span>
+              <span>{moment(post?.createdAt).fromNow()}</span>
             </div>
           </div>
         </div>
@@ -62,7 +130,7 @@ const PostDetail = () => {
         </div>
 
         {/* Content */}
-        <div className="text-gray-700 text-sx leading-relaxed whitespace-pre-wrap mb-6">
+        <div className="text-slate-900 tracking-wider leading-relaxed whitespace-pre-wrap mb-6">
           {post?.content || "Post content goes here..."}
         </div>
 
@@ -83,18 +151,18 @@ const PostDetail = () => {
       </div>
 
       {/* COMMENT SECTION */}
-      <div className=" m-10">
+      <div className="m-10">
         {/* Heading */}
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Comments ({post?.comments?.length || 0})
         </h2>
 
         {/* Add Comment */}
-        <div className="bg-white shadow-sm rounded-xl p-4 transition">
+        <div className="shadow-md bg-white rounded-xl p-4 transition">
           <textarea
-            placeholder="Write your comment..."
+            placeholder="Type comment here..."
             rows={3}
-            className="w-full resize-none bg-transparent text-gray-700 text-sm focus:outline-none placeholder:text-gray-400"
+            className="w-full resize-none  bg-transparent text-gray-700 text-sm focus:outline-none placeholder:text-slate-300 tracking-wider"
           />
 
           <div className="flex items-center justify-between mt-3">
@@ -150,4 +218,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostView;

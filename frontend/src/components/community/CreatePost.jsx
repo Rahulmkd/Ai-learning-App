@@ -1,15 +1,12 @@
 import { Plus, Send } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import postService from "../../services/postService";
-import Spinner from "../common/Spinner";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import useCreatePost from "../../hooks/useCreatePost";
 
 const CreatePost = () => {
   const navigate = useNavigate();
-  const { postId } = useParams();
-  const isEdit = Boolean(postId);
-
-  const [loading, setLoading] = useState(true);
+  const { createPost, isCreating } = useCreatePost();
 
   const [post, setPost] = useState({
     title: "",
@@ -17,75 +14,23 @@ const CreatePost = () => {
     topics: [],
   });
 
-  // Load post data if edit action
-
-  useEffect(() => {
-    if (!postId) return;
-
-    const fetchPost = async () => {
-      try {
-        setLoading(true);
-
-        const response = await postService.getPostById(postId);
-        const data = response.data;
-
-        setPost({
-          title: data.title || "",
-          content: data.content || "",
-          topics: data.topics || [],
-        });
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [postId]);
-
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
 
   // Submit (Create or Update)
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-
-      if (isEdit) {
-        await postService.updatePost(postId, post); // UPDATE
-      } else {
-        await postService.submitPost(post); // CREATE
-      }
-
-      // Reset only for create
-      if (!isEdit) {
-        setPost({
-          title: "",
-          content: "",
-          topics: [],
-        });
-      }
-
-      navigate("/community");
-    } catch (error) {
-      console.error("Post error:", error);
-    } finally {
-      setLoading(false);
-    }
+    createPost(post, {
+      onSuccess: () => {
+        navigate("/community");
+      },
+      onError: (err) => {
+        console.error("Create failed:", err);
+      },
+    });
   };
-
-  // Loading state UI
-  if (loading && isEdit) {
-    return (
-      <div className="flex items-center justify-center mt-50">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-3xl mx-auto mt-4 sm:mt-6 bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5">
@@ -117,7 +62,7 @@ const CreatePost = () => {
               className="w-full sm:w-auto flex justify-center items-center gap-2 px-3 sm:px-4 py-2 text-sm font-semibold rounded-lg transition bg-green-500 hover:bg-green-600 text-white"
             >
               <Send size={16} />
-              Post
+              {isCreating ? "Posting..." : "Post"}
             </button>
           </div>
         </div>

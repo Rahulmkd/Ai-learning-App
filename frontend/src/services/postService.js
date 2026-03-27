@@ -17,7 +17,7 @@ const getPosts = async () => {
   try {
     const response = await axiosInstance.get(API_PATHS.POST.GET_POSTS);
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to Get Post" };
   }
@@ -29,7 +29,7 @@ const getPostById = async (postId) => {
       API_PATHS.POST.GET_POSTS_BY_ID(postId),
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to Get Post" };
   }
