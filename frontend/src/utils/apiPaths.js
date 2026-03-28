@@ -55,5 +55,6 @@ export const API_PATHS = {
     GET_POSTS_BY_ID: (postId) => `/api/post/${postId}`,
     UPDATE_POST: (postId) => `/api/post/${postId}`,
     DELETE_POST: (postId) => `/api/post/${postId}`,
+    ADD_COMMENT: (postId) => `/api/post/${postId}/comment`,
   },
 };

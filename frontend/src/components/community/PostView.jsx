@@ -17,24 +17,47 @@ import useDropdown from "../../hooks/useDropdown";
 import usePostMenu from "../../hooks/usePostMenu";
 import usePostActions from "../../hooks/usePostActions";
 import { useAuth } from "../../context/AuthContext";
+import usePostComment from "../../hooks/usePostComment";
 
 const PostView = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [comment, setComment] = useState("");
+
   const { postId } = useParams();
+  const navigate = useNavigate();
+
+  // Custom hooks for data & actions
   const { data: post, isLoading } = usePost(postId);
   const { deletePost } = usePostActions();
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const { addComment, isCommenting } = usePostComment();
 
+  //  UI / dropdown hooks
   const { ref, isOpen, toggle, close } = useDropdown(openMenuId, setOpenMenuId);
 
+  //  Derived menu items / actions
   const { menuItems, menuActions } = usePostMenu({
     user,
     post,
     navigate,
     onDelete: deletePost,
   });
+  console.log("viewPost___Data", post);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!comment.trim()) return;
+
+    console.log("Submitting:", comment);
+
+    addComment({
+      postId,
+      comment,
+    });
+
+    setComment("");
+  };
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -158,60 +181,80 @@ const PostView = () => {
         </h2>
 
         {/* Add Comment */}
-        <div className="shadow-md bg-white rounded-xl p-4 transition">
+        <form
+          onSubmit={handleSubmit}
+          className="shadow-md bg-white rounded-xl p-4 transition"
+        >
           <textarea
+            name="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             placeholder="Type comment here..."
             rows={3}
             className="w-full resize-none  bg-transparent text-gray-700 text-sm focus:outline-none placeholder:text-slate-300 tracking-wider"
           />
 
           <div className="flex items-center justify-between mt-3">
-            <button className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm cursor-pointer">
+            <button
+              type="button"
+              className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm cursor-pointer"
+            >
               <Paperclip size={16} />
             </button>
 
-            <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02]">
-              <span>Comment</span>
+            <button
+              type="submit"
+              disabled={isCommenting}
+              className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02] disabled:opacity-50"
+            >
+              {isCommenting ? "Posting..." : "Comment"}
             </button>
           </div>
-        </div>
+        </form>
 
         {/* Comment List */}
-        <div className="mt-6 space-y-5">
-          {/* Single Comment */}
-          {(post?.comments || [1, 2]).map((c, i) => (
-            <div key={i} className="flex gap-3">
-              {/* Avatar */}
-              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100">
-                <User size={16} className="text-gray-600" />
-              </div>
-
-              {/* Content */}
-              <div className="flex-1">
-                <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-sm font-medium text-gray-700">
-                    {c?.author || "User"}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">
-                    {c?.text || "This is a comment..."}
-                  </p>
+        <div className="mt-6">
+          {(post?.comments || [])
+            .slice()
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((comment) => (
+              <div
+                key={comment._id}
+                className="flex gap-3 py-4 border-b border-gray-200 last:border-none"
+              >
+                {/* Avatar */}
+                <div className="w-5 h-5 flex items-center justify-center rounded-full bg-gray-200 shrink-0">
+                  <User size={12} className="text-gray-600" />
                 </div>
 
-                {/* Meta */}
-                <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
-                  <span>{c?.createdAt || "Now"}</span>
+                {/* Content */}
+                <div className="flex-1">
+                  {/* Username */}
+                  <p className="text-sm font-semibold text-gray-800">
+                    {comment.userId?.username || "User"}
+                  </p>
 
-                  <button className="hover:text-red-500 cursor-pointer">
-                    Like
-                  </button>
+                  {/* Date BELOW username */}
+                  <span className="block text-[10px] text-gray-400 mt-[2px]">
+                    {comment?.createdAt &&
+                      (moment().diff(moment(comment.createdAt), "minutes") < 60
+                        ? `${moment().diff(moment(comment.createdAt), "minutes")} minutes ago`
+                        : `${Math.floor(moment().diff(moment(comment.createdAt), "minutes") / 60)} hours ago`)}
+                  </span>
 
-                  <button className="hover:text-blue-500 cursor-pointer">
-                    Reply
-                  </button>
+                  {/* Comment */}
+                  <p className="text-sm text-gray-700 mt-2 whitespace-pre-wrap leading-relaxed">
+                    {comment?.content}
+                  </p>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
+                    <button className="hover:text-red-500">Like</button>
+                    <button className="hover:text-blue-500">Reply</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

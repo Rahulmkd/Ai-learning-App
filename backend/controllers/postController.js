@@ -249,7 +249,7 @@ export const toggleSave = async (req, res, next) => {
 
 export const addComment = async (req, res, next) => {
   try {
-    const { content } = req.body;
+    const { comment } = req.body;
 
     const post = await Post.findById(req.params.id);
 
@@ -261,7 +261,7 @@ export const addComment = async (req, res, next) => {
 
     post.comments.push({
       userId: req.user.id,
-      content,
+      content: comment,
     });
 
     await post.save();
@@ -271,5 +271,7 @@ export const addComment = async (req, res, next) => {
       message: "Comment added",
       data: post.comments,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };

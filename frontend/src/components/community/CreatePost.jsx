@@ -59,7 +59,12 @@ const CreatePost = () => {
 
             <button
               type="submit"
-              className="w-full sm:w-auto flex justify-center items-center gap-2 px-3 sm:px-4 py-2 text-sm font-semibold rounded-lg transition bg-green-500 hover:bg-green-600 text-white"
+              disabled={isCreating}
+              className={`w-full sm:w-auto flex justify-center items-center gap-2 px-3 sm:px-4 py-2 text-sm font-semibold rounded-lg transition ${
+                isCreating
+                  ? "bg-green-300 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+              } text-white`}
             >
               <Send size={16} />
               {isCreating ? "Posting..." : "Post"}

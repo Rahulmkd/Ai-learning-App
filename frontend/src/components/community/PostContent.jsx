@@ -118,7 +118,7 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
             className="flex items-center gap-1 hover:text-pink-500 transition"
           >
             <Heart size={18} />
-            <span>{post.like || 0}</span>
+            <span>0</span>
           </button>
 
           {/* Comment */}
@@ -130,7 +130,7 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
             className="flex items-center gap-1 hover:text-blue-500 transition"
           >
             <MessageCircle size={18} />
-            <span>{post.comments || 0}</span>
+            <span>0</span>
           </button>
 
           {/* Share */}
