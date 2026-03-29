@@ -124,13 +124,14 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
           {/* Comment */}
           <button
             onClick={(e) => {
+              navigate(`/community/post/${post._id}`);
               e.stopPropagation();
               console.log("Comment");
             }}
-            className="flex items-center gap-1 hover:text-blue-500 transition"
+            className="flex items-center gap-1 hover:text-blue-500 transition cursor-pointer"
           >
             <MessageCircle size={18} />
-            <span>0</span>
+            <span>{post?.comments?.length || 0}</span>
           </button>
 
           {/* Share */}

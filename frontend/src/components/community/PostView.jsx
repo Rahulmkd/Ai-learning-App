@@ -204,8 +204,8 @@ const PostView = () => {
 
             <button
               type="submit"
-              disabled={isCommenting}
-              className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02] disabled:opacity-50"
+              disabled={isCommenting || !comment.trim()}
+              className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 md:px-4 py-1.5 cursor-pointer text-sm bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 hover:scale-[1.02] disabled:opacity-50"
             >
               {isCommenting ? "Posting..." : "Comment"}
             </button>
@@ -220,17 +220,17 @@ const PostView = () => {
             .map((comment) => (
               <div
                 key={comment._id}
-                className="flex gap-3 py-4 border-b border-gray-200 last:border-none"
+                className="flex gap-3 py-4 border-b border-gray-300 last:border-none"
               >
                 {/* Avatar */}
-                <div className="w-5 h-5 flex items-center justify-center rounded-full bg-gray-200 shrink-0">
+                <div className="w-5 h-5 mt-1 flex items-center justify-center rounded-full bg-gray-200 shrink-0">
                   <User size={12} className="text-gray-600" />
                 </div>
 
                 {/* Content */}
                 <div className="flex-1">
                   {/* Username */}
-                  <p className="text-sm font-semibold text-gray-800">
+                  <p className="text-sm font-semibold text-gray-800 inline hover:text-blue-500 cursor-pointer">
                     {comment.userId?.username || "User"}
                   </p>
 
