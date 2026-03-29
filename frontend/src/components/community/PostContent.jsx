@@ -1,9 +1,9 @@
 import {
   Bookmark,
   Ellipsis,
+  Forward,
   Heart,
   MessageCircle,
-  Share2,
   User,
 } from "lucide-react";
 import moment from "moment";
@@ -115,9 +115,9 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
               e.stopPropagation();
               console.log("Like");
             }}
-            className="flex items-center gap-1 hover:text-pink-500 transition"
+            className="flex items-center gap-1 hover:text-pink-500 transition-all"
           >
-            <Heart size={18} />
+            <Heart size={16} />
             <span>0</span>
           </button>
 
@@ -126,11 +126,10 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
             onClick={(e) => {
               navigate(`/community/post/${post._id}`);
               e.stopPropagation();
-              console.log("Comment");
             }}
             className="flex items-center gap-1 hover:text-blue-500 transition cursor-pointer"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={16} />
             <span>{post?.comments?.length || 0}</span>
           </button>
 
@@ -142,7 +141,8 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
             }}
             className="flex items-center gap-1 hover:text-green-500 transition"
           >
-            <Share2 size={18} />
+            <Forward size={18} />
+            <span>0</span>
           </button>
         </div>
 
