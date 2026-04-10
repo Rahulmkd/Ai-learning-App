@@ -25,9 +25,9 @@ const Community = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
 
-      <div className="w-full min-h-[60px] mb-6 sm:mb-10 lg:mb-12 px-4 sm:px-8 lg:px-20 flex items-center justify-center sm:justify-start bg-linear-to-br from-slate-500 to-slate-900 rounded-xl">
-        <h1 className="text-lg sm:text-2xl lg:text-3xl font-semibold text-white text-center sm:text-left">
-          What’s on your mind?
+      <div className="w-full min-h-[60px] mb-6 sm:mb-10 lg:mb-12 px-4 sm:px-8 lg:px-20 flex items-center justify-center sm:justify-start bg-linear-to-r from-indigo-200 to-purple-300 rounded-xl">
+        <h1 className="text-lg sm:text-2xl lg:text-3xl font-semibold text-indigo-500 text-center sm:text-left">
+          {/* What’s on your mind? */}
         </h1>
       </div>
 

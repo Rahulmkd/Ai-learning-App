@@ -4,6 +4,7 @@ import Footer from "../../components/layout/Footer";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/common/Spinner";
 import AiSection from "../../components/ai/AiSection";
+import Navbar from "../../components/layout/Navbar";
 
 const Home = () => {
   const { loading } = useAuth();
@@ -17,6 +18,7 @@ const Home = () => {
   }
   return (
     <main className="font-poppins">
+      <Navbar />
       <section id="hero">
         <Hero />
       </section>

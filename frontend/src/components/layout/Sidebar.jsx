@@ -22,11 +22,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   const navLinks = [
     {
-      to: "/",
-      icon: Home,
-      text: "Home",
-    },
-    {
       to: "/dashboard",
       icon: LayoutDashboard,
       text: "Dashboard",

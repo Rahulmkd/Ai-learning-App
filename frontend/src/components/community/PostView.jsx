@@ -6,6 +6,7 @@ import {
   User,
   Paperclip,
   Ellipsis,
+  Forward,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -159,15 +160,16 @@ const PostView = () => {
         {/* Actions */}
         <div className="flex justify-around sm:justify-start sm:gap-6 text-gray-600 border-t pt-3 sm:pt-4">
           <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]">
-            <Heart size={18} />
+            <Heart size={18} />0
           </button>
 
           <button className="flex items-center gap-2 hover:text-blue-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]">
             <MessageCircle size={18} />
+            {post?.comments?.length || 0}
           </button>
 
           <button className="flex items-center gap-2 hover:text-green-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]">
-            <Share2 size={18} />
+            <Forward size={20} />0
           </button>
         </div>
       </div>
