@@ -15,13 +15,13 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="">
+    <div className="bg-white">
       {/* Navbar */}
-      <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
+      <nav className="fixed top-0 inset-x-0 z-50 bg-white/80  backdrop-blur-xl border-b border-gray-100 flex items-center justify-between h-16 w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
         <img
           src="/logo.svg"
           alt="AI Learning Platform"
-          className="w-15 h-15 object-contain"
+          className="w-12 h-12 object-contain"
         />
 
         <div className="hidden md:flex items-center gap-8 text-slate-800">
@@ -55,7 +55,7 @@ const Navbar = () => {
         <div className="hidden md:flex gap-3">
           <Link
             to="/dashboard"
-            className="h-10 px-5 py-2  flex items-center justify-center bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 active:scale-95 transition-all rounded-xl text-white shadow-md hover:shadow-lg"
+            className="px-4 py-2  flex items-center justify-center bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 active:scale-95 transition-all rounded-xl text-white shadow-md hover:shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
           >
             Get started
           </Link>

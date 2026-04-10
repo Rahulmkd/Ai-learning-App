@@ -3,7 +3,7 @@ import Hero from "../../components/layout/Hero";
 import Footer from "../../components/layout/Footer";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/common/Spinner";
-import AiSection from "../../components/ai/AiSection";
+import AiSection from "../../components/layout/AiSection";
 import Navbar from "../../components/layout/Navbar";
 
 const Home = () => {

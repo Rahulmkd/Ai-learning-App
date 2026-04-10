@@ -3,7 +3,7 @@ import { AiToolsData } from "../../assets/assets";
 
 const AiSection = () => {
   return (
-    <div className="px-4 sm:px-20 xl:px-32">
+    <div className="px-4 sm:px-20 xl:px-32 mb-40">
       <div className="text-center">
         <h2 className="text-slate-700 text-[42px] font-semibold">
           AI Features
