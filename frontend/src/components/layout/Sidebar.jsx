@@ -1,24 +1,22 @@
 import React from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 import {
   LayoutDashboard,
   FileText,
-  LogOut,
   BookOpen,
   X,
-  Home,
   Users,
+  Zap,
+  Settings,
+  User,
 } from "lucide-react";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  };
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const navLinks = [
     {
@@ -53,22 +51,26 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       <aside
         className={`fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur-lg border-r border-slate-200/60 z-50 md:relative md:w-64 md:shrink-0 md:flex md:flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        {/* Logo and Close button for mobile */}
-        <div className="flex items-center justify-between h-16 border-b border-slate-200/60">
-          <div className="flex items-center justify-center w-20 h-20 ml-15 mt-5 rounded-xl">
+        {/* Logo */}
+        <div className="flex items-center gap-3 h-16 px-6 py-5 border-b border-slate-200/60">
+          <div className="w-9 h-9 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40">
             <NavLink to="/">
-              <img
-                src="/logo.svg"
-                alt="Logo"
-                className="w-10 h-10 cursor-pointer"
-              />
+              <Zap className="w-5 h-5 text-white" />
             </NavLink>
+          </div>
+          <div>
+            <h1 className="text-base font-bold text-gray-900 tracking-tight">
+              AI-Doc
+            </h1>
+            <p className="text-[10px] text-gray-400 -mt-0.5">
+              Ai-Learning Platform
+            </p>
           </div>
           <button
             onClick={toggleSidebar}
-            className="md:hidden text-slate-500 hover:text-slate-800"
+            className="md:hidden ml-auto text-slate-500 hover:text-slate-800"
           >
-            <X size={24} />
+            <X className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
@@ -99,19 +101,22 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           ))}
         </nav>
 
-        {/* Logout Section */}
-        <div className="px-3 py-4 border-t border-slate-200/60">
-          <button
-            onClick={handleLogout}
-            className="group flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200"
-          >
-            <LogOut
-              size={18}
-              strokeWidth={2.5}
-              className="transition-transform duration-200 group-hover:scale-110"
+        <div className="px-3 pb-4">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 ">
+            <div className="w-9 h-9 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              <User />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">
+                {user?.username}
+              </p>
+              <p className="text-xs text-gray-500 truncate">Free Plan</p>
+            </div>
+            <Settings
+              className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600 "
+              onClick={() => navigate("/profile")}
             />
-            Logout
-          </button>
+          </div>
         </div>
       </aside>
     </>
