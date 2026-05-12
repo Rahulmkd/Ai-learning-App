@@ -38,9 +38,10 @@ export const createPost = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const { topic } = req.query;
+
     let filter = { isDeleted: false };
 
-    if (topic) {
+    if (topic && topic !== "forYou") {
       filter.topics = topic;
     }
 

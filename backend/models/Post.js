@@ -55,7 +55,8 @@ const postSchema = new mongoose.Schema(
 
     topics: {
       type: [String],
-      default: [],
+      default: ["forYou"],
+      set: (v) => (v.length ? v : ["forYou"]),
     },
 
     attachments: {

@@ -1,13 +1,15 @@
-import { Plus, Send } from "lucide-react";
+import { Plus, Send, X } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import useCreatePost from "../../hooks/useCreatePost";
+
+const TOPIC_OPTIONS = ["career", "interview", "feedback"];
 
 const CreatePost = () => {
   const navigate = useNavigate();
   const { createPost, isCreating } = useCreatePost();
 
+  const [showTopicMenu, setShowTopicMenu] = useState(false);
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -18,17 +20,23 @@ const CreatePost = () => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
 
-  // Submit (Create or Update)
+  const toggleTopic = (topic) => {
+    setPost((prev) => {
+      const isSelected = prev.topics.includes(topic);
+      return {
+        ...prev,
+        topics: isSelected
+          ? prev.topics.filter((t) => t !== topic) // Remove if exists
+          : [...prev.topics, topic], // Add if new
+      };
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     createPost(post, {
-      onSuccess: () => {
-        navigate("/community");
-      },
-      onError: (err) => {
-        console.error("Create failed:", err);
-      },
+      onSuccess: () => navigate("/community"),
+      onError: (err) => console.error("Create failed:", err),
     });
   };
 
@@ -47,7 +55,6 @@ const CreatePost = () => {
             required
           />
 
-          {/* Buttons */}
           <div className="flex justify-end sm:justify-center gap-2 sm:gap-3">
             <button
               type="button"
@@ -74,14 +81,57 @@ const CreatePost = () => {
           </div>
         </div>
 
-        {/* Add Topic Button */}
-        <button
-          type="button"
-          className="flex items-center gap-1 px-3 sm:px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-2xl transition bg-slate-100 hover:bg-slate-200"
-        >
-          <Plus size={15} />
-          Topic
-        </button>
+        {/* Topic Section */}
+        <div className="relative">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowTopicMenu(!showTopicMenu)}
+              className="flex items-center gap-1 px-3 sm:px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-2xl transition bg-slate-100 hover:bg-slate-200"
+            >
+              <Plus size={15} />
+              Topic
+            </button>
+
+            {/* Display Selected Topics */}
+            {post.topics.map((t) => (
+              <span
+                key={t}
+                className="flex items-center gap-1 px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full"
+              >
+                {t}
+                <X
+                  size={12}
+                  className="cursor-pointer"
+                  onClick={() => toggleTopic(t)}
+                />
+              </span>
+            ))}
+          </div>
+
+          {/* Pop-out Menu */}
+          {showTopicMenu && (
+            <div className="absolute top-10 left-0 z-10 w-48 bg-white border border-gray-200 rounded-xl shadow-lg p-2 animate-in fade-in slide-in-from-top-1">
+              {TOPIC_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    toggleTopic(option);
+                    setShowTopicMenu(false); // Close after selection
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition ${
+                    post.topics.includes(option)
+                      ? "bg-green-50 text-green-600 font-semibold"
+                      : "hover:bg-slate-50 text-slate-600"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Content */}
         <div className="pt-3 border-t border-slate-200 h-60 sm:h-80">

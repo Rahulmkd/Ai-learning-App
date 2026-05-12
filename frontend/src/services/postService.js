@@ -13,9 +13,11 @@ const submitPost = async (post) => {
   }
 };
 
-const getPosts = async () => {
+const getPosts = async (topic) => {
   try {
-    const response = await axiosInstance.get(API_PATHS.POST.GET_POSTS);
+    const response = await axiosInstance.get(API_PATHS.POST.GET_POSTS, {
+      params: { topic },
+    });
     return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to Get Post" };
