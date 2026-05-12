@@ -18,12 +18,11 @@ const Community = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
 
   const { data: posts, isLoading } = usePosts(activeTab);
-  console.log("POSTS___DATA:", posts);
+
   const { deletePost } = usePostActions();
 
   return (
     <div className="min-h-screen bg-gray-50">
-     
       <div className="w-full flex justify-center px-2">
         <div className="w-full md:w-[90%] px-3 md:px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl">
           {/* Tabs (Scrollable on mobile) */}

@@ -2,7 +2,6 @@ import {
   ArrowLeft,
   Heart,
   MessageCircle,
-  Share2,
   User,
   Paperclip,
   Ellipsis,
@@ -19,20 +18,23 @@ import usePostMenu from "../../hooks/usePostMenu";
 import usePostActions from "../../hooks/usePostActions";
 import { useAuth } from "../../context/AuthContext";
 import usePostComment from "../../hooks/usePostComment";
+import useLikePost from "../../hooks/useLikePost";
 
 const PostView = () => {
+  const { user } = useAuth();
+  const { postId } = useParams();
   const [openMenuId, setOpenMenuId] = useState(null);
   const [comment, setComment] = useState("");
 
-  const { postId } = useParams();
   const navigate = useNavigate();
 
   // Custom hooks for data & actions
   const { data: post, isLoading } = usePost(postId);
+
   const { deletePost } = usePostActions();
-  const { user } = useAuth();
   const { addComment, isCommenting } = usePostComment();
 
+  const { toggleLike } = useLikePost();
   //  UI / dropdown hooks
   const { ref, isOpen, toggle, close } = useDropdown(openMenuId, setOpenMenuId);
 
@@ -43,14 +45,11 @@ const PostView = () => {
     navigate,
     onDelete: deletePost,
   });
-  console.log("viewPost___Data", post);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!comment.trim()) return;
-
-    console.log("Submitting:", comment);
 
     addComment({
       postId,
@@ -59,6 +58,18 @@ const PostView = () => {
 
     setComment("");
   };
+
+  const userId = user.id;
+
+  const isLiked = post?.likedBy?.some(
+    (id) => id.toString() === userId?.toString(),
+  );
+
+  const handleLike = (e) => {
+    e.stopPropagation();
+    toggleLike({ postId });
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -159,8 +170,13 @@ const PostView = () => {
 
         {/* Actions */}
         <div className="flex justify-around sm:justify-start sm:gap-6 text-gray-600 border-t pt-3 sm:pt-4">
-          <button className="flex items-center gap-2 hover:text-red-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]">
-            <Heart size={18} />0
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-2 hover:text-red-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]
+          ${isLiked ? "text-pink-500" : "text-gray-500"}`}
+          >
+            <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
+            <span>{post?.likedBy?.length}</span>
           </button>
 
           <button className="flex items-center gap-2 hover:text-blue-500 cursor-pointer transition active:scale-95 hover:scale-[1.05]">

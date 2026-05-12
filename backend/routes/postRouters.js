@@ -30,7 +30,7 @@ router.put("/:id", updatePost);
 router.delete("/:id", deletePost);
 
 // LIKE & SAVE
-router.patch("/:id/like", toggleLike);
+router.put("/:id/like", toggleLike);
 router.patch("/:id/save", toggleSave);
 
 //COMMENT

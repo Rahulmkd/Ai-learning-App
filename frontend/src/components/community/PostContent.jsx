@@ -11,10 +11,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import useDropdown from "../../hooks/useDropdown";
 import usePostMenu from "../../hooks/usePostMenu";
+import useLikePost from "../../hooks/useLikePost";
 
 const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { toggleLike } = useLikePost();
 
   const { ref, isOpen, toggle, close } = useDropdown(openMenuId, setOpenMenuId);
 
@@ -24,6 +26,15 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
     navigate,
     onDelete,
   });
+
+  const isLiked = post?.likedBy?.some(
+    (id) => id.toString() === user.id?.toString(),
+  );
+
+  const handleLike = (e) => {
+    e.stopPropagation();
+    toggleLike({ postId: post._id });
+  };
 
   return (
     <div
@@ -111,14 +122,12 @@ const PostContent = ({ post, onDelete, openMenuId, setOpenMenuId }) => {
         <div className="flex items-center gap-6 text-gray-500 text-sm">
           {/* Like */}
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Like");
-            }}
-            className="flex items-center gap-1 hover:text-pink-500 transition-all"
+            onClick={handleLike}
+            className={`flex items-center gap-1 hover:text-red-500 cursor-pointer transition-all
+          ${isLiked ? "text-pink-500" : "text-gray-500"}`}
           >
-            <Heart size={16} />
-            <span>0</span>
+            <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
+            <span>{post?.likedBy?.length}</span>
           </button>
 
           {/* Comment */}

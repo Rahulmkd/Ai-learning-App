@@ -56,5 +56,6 @@ export const API_PATHS = {
     UPDATE_POST: (postId) => `/api/post/${postId}`,
     DELETE_POST: (postId) => `/api/post/${postId}`,
     ADD_COMMENT: (postId) => `/api/post/${postId}/comment`,
+    LIKE_POST: (postId) => `/api/post/${postId}/like`,
   },
 };

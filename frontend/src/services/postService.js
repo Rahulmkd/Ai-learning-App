@@ -16,7 +16,6 @@ const submitPost = async (post) => {
 const getPosts = async () => {
   try {
     const response = await axiosInstance.get(API_PATHS.POST.GET_POSTS);
-    console.log("API CALLED__getPosts");
     return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to Get Post" };
@@ -28,7 +27,6 @@ const getPostById = async (postId) => {
     const response = await axiosInstance.get(
       API_PATHS.POST.GET_POSTS_BY_ID(postId),
     );
-    console.log("API CALLED__getPostById");
     return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to Get Post" };
@@ -72,6 +70,16 @@ const addComment = async (postId, comment) => {
     throw error.response?.data || { message: "Failed to add comment Post" };
   }
 };
+
+const toggleLike = async (postId) => {
+  try {
+    const response = await axiosInstance.put(API_PATHS.POST.LIKE_POST(postId));
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to add like Post" };
+  }
+};
+
 const postService = {
   submitPost,
   getPosts,
@@ -79,5 +87,6 @@ const postService = {
   updatePost,
   deletePost,
   addComment,
+  toggleLike,
 };
 export default postService;

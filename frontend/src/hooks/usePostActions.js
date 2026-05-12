@@ -13,7 +13,7 @@ const usePostActions = () => {
   });
 
   const deletePost = (postId, options) => {
-    deleteMutation.mutate(postId, options); //  forward options
+    deleteMutation.mutate(postId, options); 
   };
 
   return { deletePost };
