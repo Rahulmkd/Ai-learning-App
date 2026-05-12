@@ -23,15 +23,8 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-
-      <div className="w-full min-h-[60px] mb-6 sm:mb-10 lg:mb-12 px-4 sm:px-8 lg:px-20 flex items-center justify-center sm:justify-start bg-linear-to-r from-indigo-200 to-purple-300 rounded-xl">
-        <h1 className="text-lg sm:text-2xl lg:text-3xl font-semibold text-indigo-500 text-center sm:text-left">
-          {/* What’s on your mind? */}
-        </h1>
-      </div>
-
-      <div className="w-full flex justify-center mt-4 px-2">
+     
+      <div className="w-full flex justify-center px-2">
         <div className="w-full md:w-[90%] px-3 md:px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl">
           {/* Tabs (Scrollable on mobile) */}
           <div className="flex flex-wrap items-center gap-2 w-full">

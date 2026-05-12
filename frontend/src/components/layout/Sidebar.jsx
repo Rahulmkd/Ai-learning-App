@@ -1,8 +1,6 @@
 import React from "react";
-
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
 import {
   LayoutDashboard,
   FileText,
@@ -60,7 +58,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           </div>
           <div>
             <h1 className="text-base font-bold text-gray-900 tracking-tight">
-              AI-Doc
+              AI-DOC
             </h1>
             <p className="text-[10px] text-gray-400 -mt-0.5">
               Ai-Learning Platform

@@ -8,9 +8,19 @@ import {
   BrainCircuit,
   TrendingUp,
   Clock,
+  Sparkles,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning";
+  if (hour < 17) return "Good Afternoon";
+  return "Good Evening";
+};
 
 const DashboardPage = () => {
+  const { user } = useAuth();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +48,7 @@ const DashboardPage = () => {
 
   if (!dashboardData || !dashboardData.overview) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-100 mb-4">
             <TrendingUp className="w-8 h-8 text-slate-400" />
@@ -78,12 +88,19 @@ const DashboardPage = () => {
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-30 pointer-events-none" />
       <div className="relative max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-medium text-slate-900 tracking-tight mb-2">
-            Dashboard
+        <div className="mb-10">
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-5 h-5 text-indigo-500" />
+            <span className="text-sm font-semibold text-indigo-600 tracking-wide uppercase">
+              Overview
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+            {getGreeting()},{" "}
+            {user.username.charAt(0).toUpperCase() + user.username.slice(1)}!
           </h1>
-          <p className="text-slate-500 text-sm">
-            Track your learning progress and activity
+          <p className="text-slate-600 text-sm tracking-wide">
+            Here is what's happening with your learning progress today.
           </p>
         </div>
 
